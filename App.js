@@ -3,6 +3,9 @@ import { StyleSheet, Text , View, TextInput, TouchableOpacity} from "react-nativ
 
 export default  function App() {
   const [count, setCount] = useState(0);
+  const [tarefaAtual, setTarefaAtual] = useState('');
+  const [listaTarefas, setListaTarefas] = useState([]);
+  
   return(
     <View style={styles.container}>
       <Text style={styles.title}>Tarefas </Text>
@@ -16,13 +19,28 @@ export default  function App() {
       <Text>{count}</Text>
 
       <View style={{flexDirection: 'row', gap: 10}}>
-      <TextInput style={styles.input} placeholder="Digite a anotação..."/>
+      <TextInput style={styles.input} placeholder="Digite a anotação..." value={tarefaAtual} onChangeText={setTarefaAtual}/>
 
-      <TouchableOpacity onPress={() => setCount(count + 1)}>
+      <TouchableOpacity onPress={() => {
+        setListaTarefas([...listaTarefas, tarefaAtual])
+        setTarefaAtual('');
+      }}>
+        <Text style={styles.botao}>Adicionar</Text>
+        
+        </TouchableOpacity>
+      <TouchableOpacity onPress={() => {
+        setCount(count + 1);
+      }}>
         <Text style={styles.botao}> + </Text>
         
         </TouchableOpacity>
    </View>
+      {/* Lógica JS para mapear o Array listaTarefas */}
+      {listaTarefas.map((tarefa, index) => (
+        <View key={index}>
+          <Text>{tarefa}</Text>
+        </View>
+      ))}
 
     </View>
   )
