@@ -1,7 +1,8 @@
-import React from "react";  
+import React, { useState } from 'react';
 import { StyleSheet, Text , View, TextInput, TouchableOpacity} from "react-native";
 
 export default  function App() {
+  const [count, setCount] = useState(0);
   return(
     <View style={styles.container}>
       <Text style={styles.title}>Tarefas </Text>
@@ -12,12 +13,14 @@ export default  function App() {
       </View>
 
       <Text>Nova Tarefa</Text>
+      <Text>{count}</Text>
 
       <View style={{flexDirection: 'row', gap: 10}}>
       <TextInput style={styles.input} placeholder="Digite a anotação..."/>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => setCount(count + 1)}>
         <Text style={styles.botao}> + </Text>
+        
         </TouchableOpacity>
    </View>
 
