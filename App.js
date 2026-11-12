@@ -39,7 +39,7 @@ export default function App() {
           onChangeText={setTarefaAtual}
         />
 
-        <TouchableOpacity onPress={adicionarTarefa} style={styles.botaoContainer}>
+        <TouchableOpacity onPress={() => {adicionarTarefa(), salvarTeste()}} style={styles.botaoContainer}>
           <Text style={styles.botao}>Adicionar</Text>
         </TouchableOpacity>
 
