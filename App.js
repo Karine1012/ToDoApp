@@ -8,14 +8,19 @@ export default function App() {
   const [listaTarefas, setListaTarefas] = useState([]);
 
   const adicionarTarefa = () => {
-    if (tarefaAtual.trim() === '') return; // Evita adicionar tarefas vazias
     setListaTarefas([...listaTarefas, tarefaAtual]);
-    setTarefaAtual('');
   };
 
-  const salvarTeste = async () => {
-    await AsyncStorage.setItem('chave_secreta', 'Felipe');
-    console.log('Teste salvo no cofre!');
+  const salvarDadosLocal = async () => {
+    const listaString = JSON.stringify(listaTarefas);
+    await AsyncStorage.setItem('listaTarefas', listaString);
+  };
+
+  const resgatarDadosLocal = async () => {
+    const listaString = await AsyncStorage.getItem('listaTarefas');
+    if (listaString) {
+      setListaTarefas(JSON.parse(listaString));
+    }
 }
 
   return (
@@ -39,12 +44,12 @@ export default function App() {
           onChangeText={setTarefaAtual}
         />
 
-        <TouchableOpacity onPress={() => {adicionarTarefa(), salvarTeste()}} style={styles.botaoContainer}>
-          <Text style={styles.botao}>Adicionar</Text>
+        <TouchableOpacity onPress={() => {adicionarTarefa(), salvarDadosLocal()}} style={styles.botaoContainer}>
+          <Text style={styles.botao}>+</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => setCount(count + 1)} style={styles.botaoContainer}>
-          <Text style={styles.botao}> + </Text>
+        <TouchableOpacity onPress={() => {resgatarDadosLocal()}} style={styles.botaoContainer}>
+          <Text style={styles.botao}>↻</Text>
         </TouchableOpacity>
       </View>
 
